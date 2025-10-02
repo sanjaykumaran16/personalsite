@@ -10,44 +10,84 @@
   <!-- ✅ Bootstrap Icons CSS (Required) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
+    :root {
+      /* Darker Pink → Purple → Blue gradient */
+      --bg-grad: linear-gradient(90deg, #db2777 0%, #7c3aed 50%, #3730a3 100%);
+      --card-grad: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      --glass: rgba(0,0,0,0.25);
+      --text-primary: #ffffff;
+      --text-secondary: #d6bcfa;
+      --accent: #c4b5fd;
+      --chip: rgba(255,255,255,0.14);
+      --border: rgba(255,255,255,0.18);
+    }
     body {
       font-family: 'Segoe UI', sans-serif;
+      color: var(--text-primary);
+      background: var(--bg-grad) fixed;
+      background-size: 200% 200%;
+      animation: bgShift 18s ease infinite;
     }
-    .hero {
-      padding: 60px 0;
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
-    .profile-img {
-      width: 150px;
-      border-radius: 50%;
+    .navbar {
+      background: rgba(17, 24, 39, 0.5) !important;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
     }
-    .featured-img {
-      width: 100%;
-      border-radius: 8px;
+    .navbar .navbar-brand, .navbar .nav-link { color: var(--text-primary) !important; }
+    .navbar .nav-link:hover { color: var(--accent) !important; }
+    .hero { padding: 72px 0; position: relative; overflow: hidden; }
+    .hero::before, .hero::after { content: ""; position: absolute; filter: blur(60px); opacity: 0.35; }
+    .hero::before { width: 360px; height: 360px; background: radial-gradient(circle at 30% 30%, #f472b6, transparent 60%); top: -80px; left: -60px; }
+    .hero::after { width: 420px; height: 420px; background: radial-gradient(circle at 70% 50%, #818cf8, transparent 60%); right: -100px; bottom: -100px; }
+    .gradient-text { background: linear-gradient(90deg,#fdf4ff,#f5d0fe,#ddd6fe); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .profile-img { width: 160px; height: 160px; object-fit: cover; border-radius: 50%; border: 3px solid var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
+    .section-card { background: var(--glass); border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: 0 8px 28px rgba(0,0,0,0.25); }
+    .section-title { color: var(--text-primary); margin-bottom: 16px; }
+    .muted { color: var(--text-secondary); }
+    .chip { display: inline-block; padding: 6px 12px; border-radius: 999px; background: var(--chip); color: var(--text-primary); border: 1px solid var(--border); margin: 4px 6px 0 0; font-size: 0.9rem; }
+    .project-card { background: var(--card-grad); border: 1px solid var(--border); border-radius: 14px; padding: 18px; height: 100%; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+    .project-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.35); border-color: #d8b4fe; }
+    .project-img, .achievement-img { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
+    .achievement { background: var(--glass); border: 1px solid var(--border); border-radius: 12px; padding: 16px; transition: transform .25s ease; }
+    .achievement:hover { transform: translateY(-3px); }
+    .footer { padding: 40px 0; background: transparent; border-top: 1px solid var(--border); }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    /* Education timeline */
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before { content: ""; position: absolute; left: 12px; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,0.25); }
+    .timeline-item { position: relative; margin-bottom: 18px; padding-left: 12px; }
+    .timeline-item::before { content: ""; position: absolute; left: -6px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: #c084fc; box-shadow: 0 0 0 4px rgba(192,132,252,0.25); }
+    /* Projects staggered grid */
+    .projects-grid .project-card { height: auto; }
+    @media (min-width: 768px) {
+      .projects-grid .col-md-4:nth-child(2) .project-card { margin-top: 22px; }
+      .projects-grid .col-md-4:nth-child(3) .project-card { margin-top: 44px; }
     }
-    .footer {
-      padding: 40px 0;
-      background: #f8f9fa;
-    }
-    .project-card:hover {
-      box-shadow: 0 0 10px 5px violet;
-      transition: box-shadow 0.3s ease-in-out;
-    }
-    .achievement:hover {
-      box-shadow: 0 0 10px 5px violet;
-      transition: box-shadow 0.3s ease-in-out, margin-top 0.3s ease-in-out, padding 0.3s ease-in-out;
-      margin-top: 10px;
-      padding: 5px;
-    }
+    .featured-project { border: 1px solid #d8b4fe; background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08)); }
+    /* Achievement stat cards */
+    .stat { background: var(--glass); border: 1px solid var(--border); border-radius: 14px; padding: 18px; text-align: center; }
+    .stat .icon { font-size: 1.6rem; display: inline-block; margin-bottom: 8px; color: #d8b4fe; }
   </style>
 </head>
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+  <nav class="navbar navbar-expand-lg navbar-dark border-bottom">
     <div class="container">
       <a class="navbar-brand fw-bold" href="#">Sanjay Kumaran S</a>
       <div class="ms-auto">
+        <a class="nav-link d-inline-block me-3" href="#profile">Profile</a>
+        <a class="nav-link d-inline-block me-3" href="#skills">Skills</a>
+        <a class="nav-link d-inline-block me-3" href="#education">Education</a>
         <a class="nav-link d-inline-block me-3" href="#projects">Projects</a>
+        <a class="nav-link d-inline-block me-3" href="#responsibilities">Responsibilities</a>
         <a class="nav-link d-inline-block me-3" href="#achievements">Achievements</a>
         <a class="nav-link d-inline-block" href="#contact">Contact</a>
       </div>
@@ -55,107 +95,205 @@
   </nav>
 
   <!-- Hero Section -->
-  <div class="container hero text-start">
+  <div class="container hero text-start" id="profile">
     <div class="row align-items-center">
       <div class="col-md-8">
-        <h1 class="fw-bold">Hi, I am Sanjay Kumaran,<br>Third Year Computer Science Student</h1>
-        <p class="mt-3 text-muted">I'm a passionate CSE student with hands-on experience in full-stack development. I love building useful apps and solving real-world problems through code.</p>
+        <h1 class="fw-bold gradient-text">SANJAY KUMARAN S</h1>
+        <p class="mt-2">Third-Year Computer Science Undergraduate</p>
+        <p class="muted mb-3">Computer Science undergraduate skilled in Java, DSA, and OOP. Experienced in problem-solving and building scalable applications. Passionate about algorithms, databases, and modern development practices to solve complex problems.</p>
+        <div class="d-flex flex-wrap align-items-center gap-3">
+          <a href="https://www.linkedin.com/in/sanjay-kumaran-s-922441292/" target="_blank" class="d-flex align-items-center">
+            <i class="bi bi-linkedin me-2"></i> LinkedIn
+          </a>
+          <a href="mailto:sanjaykumarans06@gmail.com" class="d-flex align-items-center">
+            <i class="bi bi-envelope me-2"></i> sanjaykumarans06@gmail.com
+          </a>
+          
+          <a href="https://github.com/sanjaykumaran16" target="_blank" class="d-flex align-items-center">
+            <i class="bi bi-github me-2"></i> GitHub
+          </a>
+        </div>
       </div>
       <div class="col-md-4 text-center">
-        <img src="./pic.webp" alt="Profile" class="profile-img">
+        <img src="./pictures/pic.webp" alt="Profile" class="profile-img">
       </div>
     </div>
   </div>
 
-  <!-- Recent Posts -->
-  <div class="bg-light py-5">
-    <div class="container" id="projects">
-      <div class="d-flex justify-content-between mb-4">
-        <h5 class="mb-0">Projects</h5>
+  <!-- Skills -->
+  <div class="container py-3" id="skills">
+    <div class="section-card">
+      <h5 class="section-title">Skill Set</h5>
+      <div class="mb-2 muted">Languages</div>
+      <div>
+        <span class="chip">Java</span>
+        <span class="chip">C</span>
+        <span class="chip">C++</span>
+        <span class="chip">SQL</span>
       </div>
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <div class="p-4 bg-white border rounded h-100 project-card">
-            <h6>Zero Food Waste App</h6>
-            <small class="text-muted">MERN Stack Project</small>
-            <p class="mt-2 text-muted">
-                A full-stack platform built with MongoDB, Express, React, and Node.js to reduce food wastage by connecting donors with NGOs.</p>
+      <div class="mt-3 mb-2 muted">Core CS Areas</div>
+      <div>
+        <span class="chip">OOP</span>
+        <span class="chip">DBMS</span>
+        <span class="chip">DSA</span>
+        <span class="chip">SDLC</span>
+        <span class="chip">Agile Methodologies</span>
+      </div>
+      <div class="mt-3 mb-2 muted">Databases</div>
+      <div>
+        <span class="chip">MySQL</span>
+      </div>
+      <div class="mt-3 mb-2 muted">Tools</div>
+      <div>
+        <span class="chip">Git</span>
+        <span class="chip">GitHub</span>
+      </div>
+      <div class="mt-3 mb-2 muted">Web Technologies</div>
+      <div>
+        <span class="chip">HTML5</span>
+        <span class="chip">CSS3</span>
+        <span class="chip">React.js</span>
+        <span class="chip">Node.js</span>
+        <span class="chip">Express.js</span>
+      </div>
+      <div class="mt-3 mb-2 muted">Soft Skills</div>
+      <div>
+        <span class="chip">Teamwork</span>
+        <span class="chip">Communication</span>
+        <span class="chip">Problem Solving</span>
+        <span class="chip">Collaboration</span>
+        <span class="chip">Project Management</span>
+        <span class="chip">Attention to Detail</span>
+      </div>
+      <div class="mt-3 mb-2 muted">Languages Known</div>
+      <div>
+        <span class="chip">English - Working Proficiency</span>
+        <span class="chip">Tamil - Native/Bilingual</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Education -->
+  <div class="container py-3" id="education">
+    <div class="section-card">
+      <h5 class="section-title">Education</h5>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <strong>College of Engineering, Guindy</strong>
+              <div class="muted">B.E Computer Science and Engineering</div>
+            </div>
+            <div class="text-end muted">AUG 2023 - Present<br>CGPA: 8.66</div>
           </div>
         </div>
-        <div class="col-md-6 mb-3">
-          <div class="p-4 bg-white border rounded h-100 project-card">
-            <h6>The Atlas Library</h6>
-            <small class="text-muted">Web App with SQL</small>
-            <p class="mt-2 text-muted">
-                A web-based digital library system to manage book issue, return, and tracking using Node.js, Express, and MySQL.
-            </p>
+        <div class="timeline-item">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <strong>SRV Matric Higher Sec. School, Trichy</strong>
+              <div class="muted">HSC</div>
+            </div>
+            <div class="text-end muted">JUN 2021 - MAY 2023<br>Percentage: 97.33%</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Featured Works -->
-  <div class="container py-5" id="achievements">
-    <h5 class="mb-4">Achievements</h5>
-
-    <div class="mb-5">
-      <div class="row align-items-center achievement">
-        <div class="col-md-8">
-          <h6>Second place in Code Cycle</h6>
-            <span class="badge bg-dark me-2">2024</span><small class="text-muted">Hackathon</small>
-            <p class="mt-3 text-muted">
-                Secured 2nd place in the Code Cycle hackathon conducted by CSAU</p>
+  <!-- Projects (3 columns, single row, with images) -->
+  <div class="container py-3" id="projects">
+    <div class="d-flex justify-content-between mb-3">
+      <h5 class="section-title mb-0">Projects</h5>
+    </div>
+    <div class="row projects-grid">
+      <div class="col-md-4 mb-3">
+        <div class="project-card featured-project h-100">
+          <img class="project-img mb-3" src="./pictures/foodlink.png" alt="Food Link project image">
+          <h6>Food Link</h6>
+          <small class="muted">Tech Stack: MERN stack (MongoDB, Express.js, React.js, Node.js)</small>
+          <p class="mt-2 muted">Built a food donation platform with secure login, dashboards, and role-based access, enabling NGOs and donors to connect.</p>
+          <a href="#" class="mt-1">GitHub Link</a>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="project-card h-100">
+          <img class="project-img mb-3" src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1200&q=60" alt="Library books and catalog image">
+          <h6>The Atlas Library</h6>
+          <small class="muted">Tech Stack: HTML5, CSS3, Node.js, Express.js, MySQL</small>
+          <p class="mt-2 muted">Multi-library management for issuance, returns, and inventory tracking. Led responsive UI/UX with database-driven interactions.</p>
+          <a href="#" class="mt-1">GitHub Link</a>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="project-card h-100">
+          <img class="project-img mb-3" src="./pictures/interviewmate.png" alt="Interview Mate project image">
+          <h6>Interview Mate</h6>
+          <small class="muted">Tech Stack: MERN stack (MongoDB, Express.js, React.js, Node.js)</small>
+          <p class="mt-2 muted">AI-powered interview prep with coding/HR question generation, real-time feedback, and voice-based answers.</p>
+          <a href="#" class="mt-1">GitHub Link</a>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="mb-5">
-      <div class="row align-items-center achievement">
-        <div class="col-md-8">
-          <h6>HackZ Submission</h6>
-            <span class="badge bg-dark me-2">2024</span><small class="text-muted">Hackathon</small>
-            <p class="mt-3 text-muted">
-                Created a tech solution prototype as part of HackZ organized by CSEA, shortlisted in submission round.</p>
+  <!-- Responsibilities Held -->
+  <div class="container py-3" id="responsibilities">
+    <div class="section-card">
+      <h5 class="section-title">Responsibilities Held</h5>
+      <ul class="mb-0">
+        <li class="muted">Deputy Head of Events - Computer Society of Anna University, CSAU (Aug 2025 - Present)</li>
+        <li class="muted">Senior Coordinator of Digital Contents - ACM Student Chapter of CEG (Aug 2025 - Present)</li>
+        <li class="muted">Technical Operations Coordinator - CEG Tech Forum (Nov 2024 - Present)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Achievements as icon stat cards -->
+  <div class="container py-3" id="achievements">
+    <h5 class="section-title">Achievements</h5>
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <div class="stat h-100">
+          <span class="icon"><i class="bi bi-trophy"></i></span>
+          <h6 class="mb-1">Code Cycle Hackathon</h6>
+          <small class="muted">Secured 2nd place among 400+ participants (CSAU)</small>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="stat h-100">
+          <span class="icon"><i class="bi bi-braces"></i></span>
+          <h6 class="mb-1">Data Structures & Algorithms</h6>
+          <small class="muted">Solved 250+ problems on LeetCode</small>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="stat h-100">
+          <span class="icon"><i class="bi bi-lightning-charge"></i></span>
+          <h6 class="mb-1">Smart India Hackathon</h6>
+          <small class="muted">Shortlisted as college-level finalist for SIH 2024 & 2025</small>
         </div>
       </div>
     </div>
-
-    <div class="mb-5">
-      <div class="row align-items-center achievement">
-        <div class="col-md-8">
-          <h6>Smart India Hackathon 2024</h6>
-            <span class="badge bg-dark me-2">2024</span><small class="text-muted">Finalist</small>
-            <p class="mt-3 text-muted">
-                Shortlisted as a finalist at college level for Smart India Hackathon 2024 with a team-based innovative solution.</p>
-        </div>
-      </div>
-    </div>
-
-    
   </div>
 
   <!-- Footer -->
-  <!-- Footer -->
-<div class="footer text-center" id="contact">
-  <div class="mb-3">
-    <!-- LinkedIn -->
-    <a href="https://www.linkedin.com/in/sanjay-kumaran-s-922441292/" target="_blank" class="me-3 text-dark" title="LinkedIn">
-      <i class="bi bi-linkedin" style="font-size: 1.5rem;"></i>
-    </a>
-
-    <!-- GitHub -->
-    <a href="https://github.com/sanjaykumaran16" target="_blank" class="me-3 text-dark" title="GitHub">
-      <i class="bi bi-github" style="font-size: 1.5rem;"></i>
-    </a>
-
-    <!-- Location -->
-    <a href="#" class="text-dark" data-bs-toggle="tooltip" title="Chennai, TN">
-      <i class="bi bi-geo-alt-fill" style="font-size: 1.5rem;"></i>
-    </a>
+  <div class="footer text-center" id="contact">
+    <div class="mb-3">
+      <a href="https://www.linkedin.com/in/sanjay-kumaran-s-922441292/" target="_blank" class="me-3" title="LinkedIn" aria-label="LinkedIn">
+        <i class="bi bi-linkedin" style="font-size: 1.6rem;"></i>
+      </a>
+      <a href="https://github.com/sanjaykumaran16" target="_blank" class="me-3" title="GitHub" aria-label="GitHub">
+        <i class="bi bi-github" style="font-size: 1.6rem;"></i>
+      </a>
+      <a href="mailto:sanjaykumarans06@gmail.com" class="me-3" title="Email" aria-label="Email">
+        <i class="bi bi-envelope-fill" style="font-size: 1.6rem;"></i>
+      </a>
+      <a href="#" title="Chennai, TN" aria-label="Location">
+        <i class="bi bi-geo-alt-fill" style="font-size: 1.6rem;"></i>
+      </a>
+    </div>
+    <p class="muted mb-0">&copy; 2025 All rights reserved</p>
   </div>
-  <p class="text-muted mb-0">&copy; 2025 All rights reserved</p>
-</div>
 
 
 
